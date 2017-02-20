@@ -32,7 +32,7 @@
     "angular": "^1.6.1",
     "angular-sanitize": "^1.6.1",
     "angular-ui-grid": "^4.0.2",
-    "ng-formio": "^2.8.2"
+    "ng-formio": "file:..\\ng-formio"
   },
   "browserify": {
     "transform": [

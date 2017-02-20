@@ -15,7 +15,7 @@
     "angular": "^1.6.2",
     "angular-sanitize": "^1.6.2",
     "angular-ui-grid": "^4.0.2",
-    "ng-formio": "^2.10.2"
+    "ng-formio": "../ng-formio"
   },
   "license": "MIT",
   "ignore": [
@@ -32,5 +32,9 @@
         "ui-grid.js"
       ]
     }
+  },
+  "resolutions": {
+    "angular": ">=1.2.18",
+    "angular-bootstrap": "^2.4.0"
   }
 }
