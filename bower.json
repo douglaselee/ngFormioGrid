@@ -1,6 +1,6 @@
 {
   "name": "ng-formio-grid",
-  "version": "0.12.2",
+  "version": "1.0.0",
   "authors": [
     "Travis Tidwell <travis@form.io>"
   ],
@@ -12,9 +12,9 @@
     "form"
   ],
   "dependencies": {
-    "angular": "^1.6.2",
-    "angular-sanitize": "^1.6.2",
-    "angular-ui-grid": "^4.0.2",
+    "angular": "^1.6.4",
+    "angular-sanitize": "^1.6.4",
+    "angular-ui-grid": "^4.0.4",
     "ng-formio": "../ng-formio"
   },
   "license": "MIT",
@@ -34,7 +34,6 @@
     }
   },
   "resolutions": {
-    "angular": ">=1.2.18",
     "angular-bootstrap": "^2.4.0"
   }
 }
