@@ -464,7 +464,7 @@ angular.module('ngFormioGrid', [
               field: field,
               cellTemplate: template,
               form: form,
-              enableCellEdit: !!options.enableCellEdit,
+              enableCellEdit: true, // !!options.enableCellEdit,
               enableFiltering: !!options.enableFiltering
             };
 
