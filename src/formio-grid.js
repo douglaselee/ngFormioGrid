@@ -164,6 +164,10 @@ angular.module('ngFormioGrid', [
               setLoading(true);
             });
 
+            // Set row header template so user has something to click on if first column's data is empty
+            var rowHeaderTemplate = '<a ng-click="grid.appScope.buttonClick(\'rowView\', row)" style="cursor: pointer"><span class="glyphicon glyphicon-share-alt" style="padding: 4px 8px 12px 8px" aria-hidden="true"></span></a>';
+            gridApi.core.addRowHeaderColumn({name: 'rowHeaderCol', displayName: '', width: 32, cellTemplate: rowHeaderTemplate});
+
             var debounce = 0;
             gridApi.core.on.filterChanged($scope, function() {
               var grid = this.grid;
