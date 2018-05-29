@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 angular.module('ngFormioGrid', [
   'formio',
@@ -35,6 +35,7 @@ angular.module('ngFormioGrid', [
     replace: true,
     scope: {
       src: '=',
+      service: '=?',
       query: '=?',
       aggregate: '=?',
       columns: '=?',
@@ -77,7 +78,7 @@ angular.module('ngFormioGrid', [
       ) {
         var ready = $q.defer();
         var loadReady = ready.promise;
-        var formio = null;
+        var formio = $scope.service || null;
         var paginationOptions = {
           pageNumber: 1,
           pageSize: 25,
@@ -130,7 +131,7 @@ angular.module('ngFormioGrid', [
           }
         };
 
-        $scope.gridOptionsDef = angular.merge({
+        $scope.gridOptionsDef = angular.extend({
           namespace: 'row',
           dataRoot: 'data.',
           responseData: '',
@@ -258,7 +259,7 @@ angular.module('ngFormioGrid', [
                 paginationOptions.sort = null;
               } else {
                 var lastIndex = sortColumns.length - 1;
-                setSort(sortColumns[lastIndex].sort, sortColumns[lastIndex].colDef.field);
+                setSort(sortColumns[lastIndex].sort, sortColumns[lastIndex].colDef.sortField || sortColumns[lastIndex].colDef.field);
               }
               gridApi.pagination.seek(1);
               getPage();
@@ -388,7 +389,10 @@ angular.module('ngFormioGrid', [
               });
             }
             else {
-              if (!formio) { return; }
+              if (!formio) {
+                setLoading(false);
+                return;
+              }
               $scope.gridOptionsDef.data = [];
               $scope.$emit("onRequest", $scope.query);
               $scope.$emit('onRequest:' + $scope.gridOptionsDef.namespace, $scope.query);
@@ -483,7 +487,21 @@ angular.module('ngFormioGrid', [
             };
 
             // Allow for other options.
-            ['sort', 'filterField', 'filter', 'width', 'sortable', 'visible', 'minWidth', 'maxWidth', 'resizable', 'cellClass', 'headerCellClass', 'headerCellTemplate'].forEach(function(option) {
+            [
+              'sort',
+              'sortField',
+              'filterField',
+              'filter',
+              'width',
+              'sortable',
+              'visible',
+              'minWidth',
+              'maxWidth',
+              'resizable',
+              'cellClass',
+              'headerCellClass',
+              'headerCellTemplate'
+            ].forEach(function(option) {
               if (options.hasOwnProperty(option)) {
                 column[option] = options[option];
               }
@@ -502,7 +520,7 @@ angular.module('ngFormioGrid', [
                 setSort(options.sort, options.field || field);
               }
 
-              addColumn(components[key], options, key);
+              addColumn(components[key] || options.component, options, key);
             });
           }
           else if (form) {
